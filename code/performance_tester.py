@@ -1,8 +1,10 @@
+import sys, getopt
 from mongoengine import *
 from mongoengine.context_managers import switch_db
-from pymongo import MongoClient, ReadPreference
+from .data_importer.py import MongosConnection
 
 class AggregateQuery:
+    
     def __init__(self, chunk_number):
         self.chn = chunk_number
         
@@ -23,6 +25,7 @@ class AggregateQuery:
 
         
 class MapReduceQuery:
+    
     def __init__(self, chunk_number):
 
     def mapFunction(self): 
@@ -60,7 +63,7 @@ class MapReduceQuery:
             "};"            
     return code
 
-    def mapReduceFunction(self):
+    def stateAvgs(self):
         query = "db.supplier.mapReduce("+ self.mapFunction()+","
             " "+self.reduceFunction()+","
             " {"
@@ -70,14 +73,37 @@ class MapReduceQuery:
             " )"
     return query
     
-#uri for sharded mongos
-uri = "achaora-mongodb-1:27019,achaora-mongodb-2:27019,achaora-mongodb-3:27019"
-
-#connection for sharded mongos set-up
-setuptwo = MongoClient(uri,
-                       configdb=True,
-                       config='/srv/mongodb/mongos.conf')
-
-#connection for standalone setup          
-setupone = MongoClient('127.0.0.1', 27017)
+def main(argv):
+    try:
+        opts, args = getopt.getopt(argv,"h","s1","s2")
+    except getopt.GetoptError:
+        print 'performance_tester.py -[options]'
+        print 'OPTIONS'
+        print '-s1   connection for standalone MongoDB server'
+        print '-s2   connection for sharded MongoDB server cluster'
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'performance_tester.py -[options]'
+            print 'OPTIONS'
+            print '-s1   connection for standalone MongoDB server'
+            print '-s2   connection for sharded MongoDB server cluster'
+            sys.exit()
+        elif opt in ("-s1", "--setup1"):
+            inputfile = arg
+        elif opt in ("-s2", "--setup2"):
+            inputfile = arg
+    return inputfile
+   
+if __name__ == '__main__':
+    main(sys.argv[1:])
+    inputfile = main(sys.argv[1:])
+    datafile = open(inputfile)
+    number_of_chunks = 10
+    chunk = {}
+    for chunk_number in range(number_of_chunks):
+        print 'Processing chunk'+str(chunk_number)+'.txt... \n'
+        chunk[chunk_number] = DataChunker(datafile, chunk_number, number_of_chunks)
+        chunk[chunk_number].work()
+    
 

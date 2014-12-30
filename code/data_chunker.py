@@ -47,7 +47,6 @@ def main(argv):
          sys.exit()
       elif opt in ("-i", "--ifile"):
          inputfile = arg
-   #print 'Input file is "', inputfile
    return inputfile
    
 if __name__ == '__main__':

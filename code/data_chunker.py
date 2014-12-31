@@ -39,7 +39,7 @@ def main(argv):
    try:
       opts, args = getopt.getopt(argv,"hi:",["ifile="])
    except getopt.GetoptError:
-      print 'data_chunker.py -i <inputfile> -o chunk<chunk_number>.txt'
+      print 'data_chunker.py -i <inputfile>'
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':

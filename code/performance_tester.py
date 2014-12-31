@@ -5,8 +5,7 @@ from .data_importer.py import MongosConnection
 
 class AggregateQuery:
     
-    def __init__(self, chunk_number):
-        self.chn = chunk_number
+    def __init__(self):
         
     def stateAvgs(self):
         query = "db.supplier.aggregate("
@@ -26,7 +25,7 @@ class AggregateQuery:
         
 class MapReduceQuery:
     
-    def __init__(self, chunk_number):
+    def __init__(self):
 
     def mapFunction(self): 
         code = "function() {"
@@ -74,36 +73,45 @@ class MapReduceQuery:
     return query
     
 def main(argv):
+    setup = ''
+    query = ''
     try:
-        opts, args = getopt.getopt(argv,"h","s1","s2")
+        opts, args = getopt.getopt(argv,"hs:q:",["setup=","query"])
     except getopt.GetoptError:
-        print 'performance_tester.py -[options]'
-        print 'OPTIONS'
-        print '-s1   connection for standalone MongoDB server'
-        print '-s2   connection for sharded MongoDB server cluster'
+        print 'performance_tester.py -s [setup] -q [query] \n'
+        print 'SETUP \n'
+        print 's1   connection for standalone MongoDB server \n'
+        print 's2   connection for sharded MongoDB server cluster \n'
+        print 'QUERY \n'
+        print 'q1   aggregate query \n'
+        print 'q2   mapreduce query \n'
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'performance_tester.py -[options]'
-            print 'OPTIONS'
-            print '-s1   connection for standalone MongoDB server'
-            print '-s2   connection for sharded MongoDB server cluster'
+            print 'performance_tester.py -s [setup] -q [query] \n'
+            print 'SETUP \n'
+            print 's1   connection for standalone MongoDB server \n'
+            print 's2   connection for sharded MongoDB server cluster \n'
+            print 'QUERY \n'
+            print 'q1   aggregate query \n'
+            print 'q2   mapreduce query \n'
             sys.exit()
-        elif opt in ("-s1", "--setup1"):
-            inputfile = arg
-        elif opt in ("-s2", "--setup2"):
-            inputfile = arg
-    return inputfile
+        elif opt in ("-s", "--setup"):
+            setup = arg
+        elif opt in ("-q", "--query"):
+            query = arg
+    return setup, query
    
 if __name__ == '__main__':
     main(sys.argv[1:])
-    inputfile = main(sys.argv[1:])
-    datafile = open(inputfile)
-    number_of_chunks = 10
-    chunk = {}
-    for chunk_number in range(number_of_chunks):
-        print 'Processing chunk'+str(chunk_number)+'.txt... \n'
-        chunk[chunk_number] = DataChunker(datafile, chunk_number, number_of_chunks)
-        chunk[chunk_number].work()
+    connect = MongosConnection(setup)
+    connect.connectTo()
+    if query == 'q1':
+        run = AggregateQuery()
+    elif query == 'q2':
+        run = MapReduceQuery()
+    for test in range(3):
+        print 'Performance test...pass '+str(test + 1)+' of 3. \n'
+        run.stateAvgs()
     
 

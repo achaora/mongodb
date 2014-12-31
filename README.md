@@ -1,13 +1,16 @@
+==========================================
 INSTRUCTIONS:
-
-I. 	Set up server environment
-II.	Chunk data-set and incremetally import data into databases
-III.	Execute performance scripts on different data-sizes and models
-IV.	Vizualize performance results
+==========================================
+I. 	Set up server environments
+II.	Download and chunk data-set 
+III 	Import data chunk into databases
+IV.	Execute performance scripts
+V	Repeat III and IV to increment data-set sizes and execute performance scripts
+VI.	Vizualize performance results
 
 
 ==========================================
-I. SET UP SERVER ENVIRONMENT	
+I. SET UP SERVER ENVIRONMENTS	
 ==========================================
 
 Set Up 1: Standalone VM
@@ -63,7 +66,11 @@ Set Up 2: 3 VM Cluster
 11. Ensure that the permissions on the conf files are restricted but set to where they can be read by the account under which the MongoDB services run. 
 
 ===========================================
-II. CHUNK DATA-SET AND INCREMENTALLY IMPORT
+II. DOWNLOAD AND CHUNK DATA-SET
 ===========================================
 
 1. Run script ./code/data_chunker.py to chunk data-set
+
+===========================================
+III. IMPORT DATA CHUNK INTO DATABASES
+===========================================

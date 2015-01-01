@@ -105,7 +105,8 @@ def main(argv):
 if __name__ == '__main__':
     main(sys.argv[1:])
     connect = MongosConnection(setup)
-    connect.connectTo()
+    instance = connect.connectTo()
+    db = instance.medicareProviders
     if query == 'q1':
         run = AggregateQuery()
     elif query == 'q2':

@@ -6,7 +6,7 @@ class DataChunker:
 
     def __init__(self, datafile, chunk_number, number_of_chunks):
         self.dat = datafile
-        self.chn = chunk_number
+        self.chn = chunk_number + 1
         self.nch = number_of_chunks
          
 
@@ -28,7 +28,6 @@ class DataChunker:
                    
         #iterate to end of chunk reading file content and writing to chunk file
         while self.dat.tell() < end:
-            #datafile.readline()
             content = self.dat.readline()
             wf.write(content)
          

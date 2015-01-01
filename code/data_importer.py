@@ -20,36 +20,37 @@ class MongosConnection:
                            config='/srv/mongodb/mongos.conf')
     return connection
     
+def importer(chunk):
+       
 def main(argv):
-    inputfile = ''
+    setup = ''
+    chunk = ''
     try:
-        opts, args = getopt.getopt(argv,"h","s1","s2")
+        opts, args = getopt.getopt(argv,"hi:s:",["ifile=","setup="])
     except getopt.GetoptError:
-        print 'data_importer.py -[options] -i <inputfile>'
-        print 'OPTIONS'
-        print '-s1   connection for standalone MongoDB server'
-        print '-s2   connection for sharded MongoDB server cluster'
+        print 'data_importer.py -i <inputfile> -s [setup] \n'
+        print '-i   data chunk to be imported \n'
+        print 'SETUP \n'
+        print 's1   standalone MongoDB server \n'
+        print 's2   sharded MongoDB server cluster \n'
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'performance_tester.py -[options]'
-            print 'OPTIONS'
-            print '-s1   connection for standalone MongoDB server'
-            print '-s2   connection for sharded MongoDB server cluster'
+            print 'data_importer.py -i <inputfile> -s [setup] \n'
+            print '-i   data chunk to be imported \n'
+            print 'SETUP \n'
+            print 's1   standalone MongoDB server \n'
+            print 's2   sharded MongoDB server cluster \n'
             sys.exit()
-        elif opt in ("-s1", "--setup1"):
-            inputfile = arg
-        elif opt in ("-s2", "--setup2"):
-            inputfile = arg
-    return inputfile
+        elif opt in ("-s", "--setup"):
+            setup = arg
+        elif opt in ("-i", "--ifile"):
+            chunk = arg    
+    return setup, chunk
    
 if __name__ == '__main__':
     main(sys.argv[1:])
-    inputfile = main(sys.argv[1:])
-    datafile = open(inputfile)
-    number_of_chunks = 10
-    chunk = {}
-    for chunk_number in range(number_of_chunks):
-        print 'Processing chunk'+str(chunk_number)+'.txt... \n'
-        chunk[chunk_number] = DataChunker(datafile, chunk_number, number_of_chunks)
-        chunk[chunk_number].work()
+    connect = MongosConnection(setup)
+    instance = connect.connectTo()
+    db = instance.medicareProviders
+    

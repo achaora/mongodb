@@ -6,30 +6,31 @@ from pymongo import MongoClient, ReadPreference
 class MongosConnection:
     
     def __init__(self, setup):
-        stp = self.setup 
+        self.stp = setup 
+        self.connection = MongoClient()
         
     def connectTo(self):    
-        if stp == 's1':
+        if self.stp == 'standalone':
             #connection for standalone setup          
-            connection = MongoClient('127.0.0.1', 27017)
-        elif stp == 's2':
+            self.connection = MongoClient('127.0.0.1', 27017)
+        elif self.stp == 'sharded':
             #uri for sharded mongos
             uri = "achaora-mongodb-1:27019,achaora-mongodb-2:27019,achaora-mongodb-3:27019"
             
             #connection for sharded mongos set-up
-            connection = MongoClient(uri,
+            self.connection = MongoClient(uri,
                            configdb=True,
                            config='/srv/mongodb/mongos.conf')
-        return connection
+        return self.connection
 
         
 class AggregateQuery:
     
     def __init__(self):
-        query = ''
+        self.query = ''
         
     def stateAvgs(self):
-        query = "db.supplier.aggregate("
+        self.query = "db.supplier.aggregate("
 	"   ["
 	"    {"
 	"     $group:" 
@@ -41,16 +42,19 @@ class AggregateQuery:
 	"    }"
 	"   ]"
         " )"         
-        return query
+        return self.query
 
         
 class MapReduceQuery:
     
     def __init__(self):
-        code = ''
+        self.mapcode = ''
+        self.reducecode = ''
+        self.finalizecode = ''
+        self.query = ''
 
     def mapFunction(self): 
-        code = "function() {"
+        self.mapcode = "function() {"
         "var key = this.nppes_provider_state;"
 	"var value = {"
 	"		count: 1,"
@@ -59,10 +63,10 @@ class MapReduceQuery:
 	"	     };"
         "emit(key, value);"
         "};"
-        return code
+        return self.mapcode
 
     def reduceFunction(self):
-        code = "function(keyState, countStVals) {"
+        self.reducecode = "function(keyState, countStVals) {"
 	"reduceVal = {count: 0, claim: 0, payment: 0};"	
 	"for (var provider = 0; provider < countStVals.length; provider++) {"
 	"		reduceVal.count += countStVals[provider].count;" 
@@ -71,10 +75,10 @@ class MapReduceQuery:
 	"		};"
         "  return reduceVal;"
         "};"            
-        return code
+        return self.reducecode
     
     def finalizeFunction(self):
-        code = "function(keyState, reduceVal) {"
+        self.finalizecode = "function(keyState, reduceVal) {"
 	"reduceVal.avg = {"
 	"  avg_claim: reduceVal.claim/reduceVal.count,"
      	"  avg_payment: reduceVal.payment/reduceVal.count"
@@ -82,17 +86,17 @@ class MapReduceQuery:
 		
 	"return reduceVal;"
         "};"            
-        return code
+        return self.finalizecode
 
     def stateAvgs(self):
-        query = "db.supplier.mapReduce("+ self.mapFunction()+","
+        self.query = "db.supplier.mapReduce("+ self.mapFunction()+","
         " "+self.reduceFunction()+","
         " {"
         "  out: { merge: 'map_reduce_suppliers_states' },"
         "  finalize:"+self.finalizeFunction()+" "
         "  }"
         " )"
-        return query
+        return self.query
     
 def main(argv):
     setup = ''
@@ -100,23 +104,23 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv,"hs:q:",["setup=","query"])
     except getopt.GetoptError:
-        print 'performance_tester.py -s [setup] -q [query] \n'
+        print '\nUsage: performance_tester.py -s [setup] -q [query] \n'
         print 'SETUP \n'
-        print 's1   connection for standalone MongoDB server \n'
-        print 's2   connection for sharded MongoDB server cluster \n'
+        print 'standalone  -connection for standalone MongoDB server \n'
+        print 'sharded  -connection for sharded MongoDB server cluster \n'
         print 'QUERY \n'
-        print 'q1   aggregate query \n'
-        print 'q2   mapreduce query \n'
+        print 'aggregate  -aggregate query \n'
+        print 'mapreduce  -mapreduce query \n'
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'performance_tester.py -s [setup] -q [query] \n'
+            print '\nUsage: performance_tester.py -s [setup] -q [query] \n'
             print 'SETUP \n'
-            print 's1   connection for standalone MongoDB server \n'
-            print 's2   connection for sharded MongoDB server cluster \n'
+            print 'standalone  -connection for standalone MongoDB server \n'
+            print 'sharded  -connection for sharded MongoDB server cluster \n'
             print 'QUERY \n'
-            print 'q1   aggregate query \n'
-            print 'q2   mapreduce query \n'
+            print 'aggregate  -aggregate query \n'
+            print 'mapreduce  -mapreduce query \n'
             sys.exit()
         elif opt in ("-s", "--setup"):
             setup = arg
@@ -125,17 +129,24 @@ def main(argv):
     return setup, query
    
 if __name__ == '__main__':
-    arg = {}
-    main(sys.argv[1:])
+    args = {}
+    args = main(sys.argv[1:])
+    setup = args[0]
+    #print setup 
+    query = args[1]
+    #print query
     connect = MongosConnection(setup)
     instance = connect.connectTo()
     db = instance.medicareProviders
-    if query == 'q1':
+    if query == 'aggregate':
         run = AggregateQuery()
-    elif query == 'q2':
+        for test in range(3):
+            print 'Performance test...pass '+str(test + 1)+' of 3. \n'
+            run.stateAvgs()
+    elif query == 'mapreduce':
         run = MapReduceQuery()
-    for test in range(3):
-        print 'Performance test...pass '+str(test + 1)+' of 3. \n'
-        run.stateAvgs()
+        for test in range(3):
+            print 'Performance test...pass '+str(test + 1)+' of 3. \n'
+            run.stateAvgs()
     
 

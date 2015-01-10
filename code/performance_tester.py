@@ -1,6 +1,4 @@
 import sys, getopt
-from mongoengine import *
-from mongoengine.context_managers import switch_db
 from pymongo import MongoClient, ReadPreference
 
 class MongosConnection:
@@ -18,9 +16,8 @@ class MongosConnection:
             uri = "achaora-mongodb-1:27019,achaora-mongodb-2:27019,achaora-mongodb-3:27019"
             
             #connection for sharded mongos set-up
-            self.connection = MongoClient(uri,
-                           configdb=True,
-                           config='/srv/mongodb/mongos.conf')
+            self.connection = MongoClient(uri)
+        
         return self.connection
 
         
@@ -138,15 +135,18 @@ if __name__ == '__main__':
     connect = MongosConnection(setup)
     instance = connect.connectTo()
     db = instance.medicareProviders
-    if query == 'aggregate':
+    #print db.connection.is_mongos
+    if query == 'aggrgate':
         run = AggregateQuery()
+        print str(run)
         for test in range(3):
-            print 'Performance test...pass '+str(test + 1)+' of 3. \n'
+            print 'Aggreagte query on '+setup+': performance test...pass '+str(test + 1)+' of 3. \n'
             run.stateAvgs()
     elif query == 'mapreduce':
         run = MapReduceQuery()
+        print str(run)
         for test in range(3):
-            print 'Performance test...pass '+str(test + 1)+' of 3. \n'
+            print 'Mapreduce query on '+setup+ ': performance test...pass '+str(test + 1)+' of 3. \n'
             run.stateAvgs()
     
 

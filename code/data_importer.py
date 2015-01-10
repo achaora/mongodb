@@ -5,21 +5,20 @@ class MongosConnection:
     
     def __init__(self, setup):
         self.stp = setup 
-        self.connection = MongoClient()
+        self.connect = MongoClient()
         
-    def connectTo(self):    
+    def mongosInstance(self):    
         if self.stp == 'standalone':
             #connection for standalone setup          
-            self.connection = MongoClient('127.0.0.1', 27017)
+            self.connect = MongoClient('127.0.0.1', 27017)
         elif self.stp == 'sharded':
             #uri for sharded mongos
             uri = "achaora-mongodb-1:27019,achaora-mongodb-2:27019,achaora-mongodb-3:27019"
             
             #connection for sharded mongos set-up
-            self.connection = MongoClient(uri,
-                           configdb=True,
-                           config='/srv/mongodb/mongos.conf')
-        return self.connection
+            self.connect = MongoClient(uri)
+        
+        return self.connect
     
 def importer(chunk):
     ingest = 'mongoimport --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --headerline --file /data/rawdata/'+str(chunk)
@@ -58,7 +57,7 @@ if __name__ == '__main__':
     #print setup
     chunk = args[1]
     #print chunk
-    connect = MongosConnection(setup)
-    instance = connect.connectTo()
-    db = instance.medicareProviders
+    selected = MongosConnection(setup)
+    instance = selected.mongosInstance()
+    db = instance.medicareSuppliers
     importer(chunk)

@@ -5,20 +5,20 @@ class MongosConnection:
     
     def __init__(self, setup):
         self.stp = setup 
-        self.connection = MongoClient()
+        self.connect = MongoClient()
         
-    def connectTo(self):    
+    def mongosInstance(self):    
         if self.stp == 'standalone':
             #connection for standalone setup          
-            self.connection = MongoClient('127.0.0.1', 27017)
+            self.connect = MongoClient('127.0.0.1', 27017)
         elif self.stp == 'sharded':
             #uri for sharded mongos
             uri = "achaora-mongodb-1:27019,achaora-mongodb-2:27019,achaora-mongodb-3:27019"
             
             #connection for sharded mongos set-up
-            self.connection = MongoClient(uri)
+            self.connect = MongoClient(uri)
         
-        return self.connection
+        return self.connect
 
         
 class AggregateQuery:
@@ -27,7 +27,7 @@ class AggregateQuery:
         self.query = ''
         
     def stateAvgs(self):
-        self.query = "db.supplier.aggregate("
+        self.query = ("db.supplier.aggregate("
 	"   ["
 	"    {"
 	"     $group:" 
@@ -38,7 +38,7 @@ class AggregateQuery:
 	"        }"
 	"    }"
 	"   ]"
-        " )"         
+        " )")         
         return self.query
 
         
@@ -51,7 +51,7 @@ class MapReduceQuery:
         self.query = ''
 
     def mapFunction(self): 
-        self.mapcode = "function() {"
+        self.mapcode = ("function() {"
         "var key = this.nppes_provider_state;"
 	"var value = {"
 	"		count: 1,"
@@ -59,11 +59,11 @@ class MapReduceQuery:
 	"		payment: this.average_Medicare_payment_amt"
 	"	     };"
         "emit(key, value);"
-        "};"
+        "};")
         return self.mapcode
 
     def reduceFunction(self):
-        self.reducecode = "function(keyState, countStVals) {"
+        self.reducecode = ("function(keyState, countStVals) {"
 	"reduceVal = {count: 0, claim: 0, payment: 0};"	
 	"for (var provider = 0; provider < countStVals.length; provider++) {"
 	"		reduceVal.count += countStVals[provider].count;" 
@@ -71,28 +71,28 @@ class MapReduceQuery:
 	"		reduceVal.payment += countStVals[provider].payment;"
 	"		};"
         "  return reduceVal;"
-        "};"            
+        "};")            
         return self.reducecode
     
     def finalizeFunction(self):
-        self.finalizecode = "function(keyState, reduceVal) {"
+        self.finalizecode = ("function(keyState, reduceVal) {"
 	"reduceVal.avg = {"
 	"  avg_claim: reduceVal.claim/reduceVal.count,"
      	"  avg_payment: reduceVal.payment/reduceVal.count"
 	"};"	
 		
 	"return reduceVal;"
-        "};"            
+        "};")            
         return self.finalizecode
 
     def stateAvgs(self):
         self.query = "db.supplier.mapReduce("+ self.mapFunction()+","
-        " "+self.reduceFunction()+","
-        " {"
-        "  out: { merge: 'map_reduce_suppliers_states' },"
-        "  finalize:"+self.finalizeFunction()+" "
-        "  }"
-        " )"
+        self.query += " "+self.reduceFunction()+","
+        self.query += " {"
+        self.query += "  out: { merge: 'map_reduce_suppliers_states' },"
+        self.query += "  finalize:"+self.finalizeFunction()+" "
+        self.query += "  }"
+        self.query += " )"
         return self.query
     
 def main(argv):
@@ -132,21 +132,22 @@ if __name__ == '__main__':
     #print setup 
     query = args[1]
     #print query
-    connect = MongosConnection(setup)
-    instance = connect.connectTo()
-    db = instance.medicareProviders
+    selected = MongosConnection(setup)
+    instance = selected.mongosInstance()
+    db = instance.medicareSuppliers
     #print db.connection.is_mongos
-    if query == 'aggrgate':
+    if query == 'aggregate':
         run = AggregateQuery()
         print str(run)
         for test in range(3):
-            print 'Aggreagte query on '+setup+': performance test...pass '+str(test + 1)+' of 3. \n'
+            print 'Aggregate query on '+setup+': performance test...pass '+str(test + 1)+' of 3. \n'
             run.stateAvgs()
+            print str(run.stateAvgs())
     elif query == 'mapreduce':
         run = MapReduceQuery()
         print str(run)
         for test in range(3):
             print 'Mapreduce query on '+setup+ ': performance test...pass '+str(test + 1)+' of 3. \n'
             run.stateAvgs()
-    
+            print str(run.stateAvgs())
 

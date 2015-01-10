@@ -51,7 +51,7 @@ class MapReduceQuery:
         self.query = ''
 
     def mapFunction(self): 
-        self.mapcode = ("function() {"
+        self.mapcode = ("var mapFunction = function() {"
         "var key = this.nppes_provider_state;"
 	"var value = {"
 	"		count: 1,"
@@ -63,7 +63,7 @@ class MapReduceQuery:
         return self.mapcode
 
     def reduceFunction(self):
-        self.reducecode = ("function(keyState, countStVals) {"
+        self.reducecode = ("var reduceFunction = function(keyState, countStVals) {"
 	"reduceVal = {count: 0, claim: 0, payment: 0};"	
 	"for (var provider = 0; provider < countStVals.length; provider++) {"
 	"		reduceVal.count += countStVals[provider].count;" 
@@ -75,7 +75,7 @@ class MapReduceQuery:
         return self.reducecode
     
     def finalizeFunction(self):
-        self.finalizecode = ("function(keyState, reduceVal) {"
+        self.finalizecode = ("var finalizeFunction = function(keyState, reduceVal) {"
 	"reduceVal.avg = {"
 	"  avg_claim: reduceVal.claim/reduceVal.count,"
      	"  avg_payment: reduceVal.payment/reduceVal.count"

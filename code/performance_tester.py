@@ -86,7 +86,8 @@ class MapReduceQuery:
         return self.finalizecode
 
     def stateAvgs(self):
-        self.query = "db.supplier.mapReduce( mapFunction,"
+        self.query = ""+str(self.mapFunction()) +"\n"+str(self.reduceFunction())+"\n"+str(self.finalizeFunction())
+        self.query += "db.supplier.mapReduce( mapFunction,"
         self.query += " reduceFunction,"
         self.query += " {"
         self.query += "  out: { merge: 'map_reduce_suppliers_states' },"

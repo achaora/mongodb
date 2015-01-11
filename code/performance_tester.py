@@ -10,13 +10,13 @@ class MongosConnection:
     def mongosInstance(self):    
         if self.stp == 'standalone':
             #connection for standalone setup          
-            self.connect = MongoClient('127.0.0.1', 27017)
+            self.connect = MongoClient('localhost', 27017)
         elif self.stp == 'sharded':
             #uri for sharded mongos
-            uri = "achaora-mongodb-1:27019,achaora-mongodb-2:27019,achaora-mongodb-3:27019"
+            uri = "achaora-mongo-001"
             
             #connection for sharded mongos set-up
-            self.connect = MongoClient(uri)
+            self.connect = MongoClient(uri, 27022)
         
         return self.connect
 
@@ -86,7 +86,7 @@ class MapReduceQuery:
         return self.finalizecode
 
     def stateAvgs(self):
-        self.query = ""+str(self.mapFunction()) +"\n"+str(self.reduceFunction())+"\n"+str(self.finalizeFunction())
+        self.query = ""+str(self.mapFunction()) +"\n"+str(self.reduceFunction())+"\n"+str(self.finalizeFunction())+"\n"
         self.query += "db.supplier.mapReduce( mapFunction,"
         self.query += " reduceFunction,"
         self.query += " {"
@@ -136,7 +136,8 @@ if __name__ == '__main__':
     selected = MongosConnection(setup)
     instance = selected.mongosInstance()
     db = instance.medicareSuppliers
-    #print db.connection.is_mongos
+    print "Connected to shard: "+str(db.connection.is_mongos)
+    print "Primary db server connection: "+str(db.connection.host)
     if query == 'aggregate':
         run = AggregateQuery()
         print str(run)
@@ -151,4 +152,5 @@ if __name__ == '__main__':
             print 'Mapreduce query on '+setup+ ': performance test...pass '+str(test + 1)+' of 3. \n'
             run.stateAvgs()
             print str(run.stateAvgs())
-
+    db.connectcion.close() 
+ 

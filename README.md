@@ -1,7 +1,7 @@
 ==========================================
 INSTRUCTIONS:
 ==========================================
-I. 	Set up server environments
+I. 	Set up server environments<p>
 II.	Download and chunk data-set 
 III 	Import data chunk into databases
 IV.	Execute performance scripts

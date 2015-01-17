@@ -68,6 +68,8 @@ Set Up 2: 3 VM Cluster
 ===========================================
 II. DOWNLOAD AND CHUNK DATA-SET
 ===========================================
+Download the tab delimited 'Medicare Provider Data - Physicians and Other Suppliers' dataset from Data.gov at: 
+http://www.cms.gov/apps/ama/license-2011.asp?file=http://download.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Downloads/Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip 
 
 1. Run script ./code/data_chunker.py to chunk data-set
 

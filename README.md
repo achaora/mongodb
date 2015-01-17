@@ -69,12 +69,12 @@ II. DOWNLOAD AND CHUNK DATA-SET
 ===========================================
 1. Download the tab delimited ['Medicare Provider Data - Physicians and Other Suppliers'](http://www.cms.gov/apps/ama/license-2011.asp?file=http://download.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Downloads/Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip) dataset from Data.gov. 
 
-2. Run script ./code/data_chunker.py to chunk data-set
+2. Run script [data_chunker.py](./code/data_chunker.py) to chunk data-set
 
 ===========================================
 III. IMPORT DATA CHUNK INTO DATABASES
 ===========================================
-
+1. Run script ./
 ===========================================
 IV. EXECUTE PERFORMANCE SCRIPTS
 ===========================================

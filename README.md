@@ -2,11 +2,11 @@
 INSTRUCTIONS:
 ==========================================
 I. 	Set up server environments<br>
-II.	Download and chunk data-set 
-III 	Import data chunk into databases
-IV.	Execute performance scripts
-V	Repeat III and IV to increment data-set sizes and execute performance scripts
-VI.	Vizualize performance results
+II.	Download and chunk data-set<br> 
+III 	Import data chunk into databases<br>
+IV.	Execute performance scripts<br>
+V	Repeat III and IV to increment data-set sizes and execute performance scripts<br>
+VI.	Vizualize performance results<br>
 
 
 ==========================================

@@ -8,7 +8,6 @@ IV.	Execute performance scripts<br>
 V	Repeat III and IV to increment data-set sizes and execute performance scripts<br>
 VI.	Vizualize performance results<br>
 
-
 ==========================================
 I. SET UP SERVER ENVIRONMENTS	
 ==========================================

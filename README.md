@@ -15,7 +15,7 @@ I. SET UP SERVER ENVIRONMENTS
 
 Set Up 1: Standalone VM
 ------------------------
-1. Install Cloudmesh on VM using the instructions found here: Quickstart for an Openstack VM
+1. Install Cloudmesh on VM using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html)
  
 2. Run script vm_standalone_builder.py to create a VM for housing the stand-alone MongoDB database
 
@@ -34,7 +34,7 @@ Set Up 1: Standalone VM
 
 Set Up 2: 3 VM Cluster
 ------------------------
-1. Install Cloudmesh on VM using the instructions found here:  Quickstart for an Openstack VM . The server running Cloudmesh will serve as the mongos (router) server. Alternatively, reuse the router server set-up in 1 above as the mongos server to the distributed MongoDB cluster.
+1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos (router) server. Alternatively, reuse the router server set-up in 1 above as the mongos server to the distributed MongoDB cluster.
 
 2. From the mongos, run the script vm_cluster_builder.py to create a 3 node cluster for hosting the sharded MongoDB. 
 

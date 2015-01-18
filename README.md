@@ -10,7 +10,7 @@ VI.	Vizualize performance results<br>
 
 ###I. SET UP SERVER ENVIRONMENTS	
 
-####  Set Up 1: Standalone VM
+####Set Up 1: Standalone VM
 
 1. Install Cloudmesh on VM using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html)
  
@@ -29,7 +29,7 @@ VI.	Vizualize performance results<br>
 		$ mongo --host [name of the MongoDB server]
 
 
-####  Set Up 2: 3 VM Cluster
+####Set Up 2: 3 VM Cluster
 
 1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos (router) server. Alternatively, reuse the router server set-up in 1 above as the mongos server to the distributed MongoDB cluster.
 

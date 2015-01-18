@@ -64,16 +64,23 @@ VI.	Vizualize performance results<br>
 
 ##II. DOWNLOAD AND CHUNK DATA-SET
 
-1. Download the tab delimited ['Medicare Provider Data - Physicians and Other Suppliers'](http://www.cms.gov/apps/ama/license-2011.asp?file=http://download.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Downloads/Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip) dataset from Data.gov. 
+1. Download the tab delimited ['Medicare Provider Data - Physicians and Other Suppliers'](http://www.cms.gov/apps/ama/license-2011.asp?file=http://download.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Downloads/Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip) dataset archive file from Data.gov. 
 
-2. Run script [data_chunker.py](./code/data_chunker.py) to chunk data-set
+2. Extract the dataset file from the archive and move it into the cloned ./data folder
+
+		$unzip .../Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip
+		$mv .../Medicare-Physician-and-Other-Supplier-PUF-CY2012 ./data
+
+3. Run script [data_chunker.py](./code/data_chunker.py) to chunk data-set
+
+		$python data_chunker.py -i 
 
 ##III. IMPORT DATA CHUNK INTO DATABASES
 
-1. Run script ./
-===========================================
-IV. EXECUTE PERFORMANCE SCRIPTS
-===========================================
+1. Run script [data_importer.py](./code/data_importer.py) to import first chunks on data into standalone and sharded cluster environments 
+
+##IV. EXECUTE PERFORMANCE SCRIPTS
+
 
 ===========================================
 V. REPEAT III AND IV

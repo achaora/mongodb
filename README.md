@@ -8,9 +8,9 @@ V	Repeat III and IV to increment data-set sizes and execute performance scripts<
 VI.	Vizualize performance results<br>
 
 
-##I. SET UP SERVER ENVIRONMENTS	
+###I. SET UP SERVER ENVIRONMENTS	
 
-###Set Up 1: Standalone VM
+####Set Up 1: Standalone VM
 
 1. Install Cloudmesh on VM using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html)
  
@@ -29,7 +29,7 @@ VI.	Vizualize performance results<br>
 		$ mongo --host [name of the MongoDB server]
 
 
-###Set Up 2: 3 VM Cluster
+####Set Up 2: 3 VM Cluster
 
 1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos (router) server. Alternatively, reuse the router server set-up in 1 above as the mongos server to the distributed MongoDB cluster.
 
@@ -62,7 +62,7 @@ VI.	Vizualize performance results<br>
 
 11. Ensure that the permissions on the conf files are restricted but set to where they can be read by the account under which the MongoDB services run. 
 
-##II. DOWNLOAD AND CHUNK DATA-SET
+###II. DOWNLOAD AND CHUNK DATA-SET
 
 1. Download the tab delimited ['Medicare Provider Data - Physicians and Other Suppliers'](http://www.cms.gov/apps/ama/license-2011.asp?file=http://download.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Downloads/Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip) dataset archive file from Data.gov. 
 
@@ -75,17 +75,14 @@ VI.	Vizualize performance results<br>
 
 		$python data_chunker.py -i 
 
-##III. IMPORT DATA CHUNK INTO DATABASES
+###III. IMPORT DATA CHUNK INTO DATABASES
 
 1. Run script [data_importer.py](./code/data_importer.py) to import first chunks on data into standalone and sharded cluster environments 
 
-##IV. EXECUTE PERFORMANCE SCRIPTS
+###IV. EXECUTE PERFORMANCE SCRIPTS
 
 
-===========================================
-V. REPEAT III AND IV
-===========================================
+###V. REPEAT III AND IV
 
-===========================================
-VI. VISUALIZE PERFORMANCE RESULTS
-===========================================
+
+###VI. VISUALIZE PERFORMANCE RESULTS

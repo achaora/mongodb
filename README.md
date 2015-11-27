@@ -52,11 +52,11 @@ VI.	Vizualize performance results<br>
 
 6. Copy the file keyfile, mongodb-keyfile, to all servers in the set-up, including the mongos server. Create and place the keyfile in an obscure directory/path with permissions set to where it is readable by the MongoDB owner.
 
-7. Update the provided sample yaml files mongos.conf, configsvr.conf and mongod.conf files with the correct path to the mongodb-keyfile on each server (find lines with place-holding text for the kefile path).
+7. Update the provided sample yaml files mongos.conf, configsvr.conf and mongod.conf files with the correct path to the mongodb-keyfile on each server (find lines with place-holding text for the keyfile path).
 
 8. Place the mongos.conf file in the /etc folder of the mongos server. 
 
-9. Place the configsvr.conf file in an appropriate folder e.g. /srv/mongodb  on each of the servers with the MongoDB cluster ‘configsvr’ role.
+9. Place the configsvr.conf file in an appropriate folder e.g. /svr/mongodb  on each of the servers with the MongoDB cluster ‘configsvr’ role.
  
 10. Place the mongod.conf file in the /etc folder of each of the servers with the shard/database role (see configuration diagram above). 
 

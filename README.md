@@ -54,13 +54,17 @@ VI.	Vizualize performance results<br>
 
 7. Update the provided sample yaml files mongos.conf, configsvr.conf and mongod.conf files with the correct path to the mongodb-keyfile on each server (find lines with place-holding text for the keyfile path).
 
-8. Place the mongos.conf file in the /etc folder of the mongos server. 
+8. Create data directories on each of the three cluster servers and ensure that the account running MongoDB has read and write access to them.
 
-9. Place the configsvr.conf file in an appropriate folder e.g. /svr/mongodb  on each of the servers with the MongoDB cluster ‘configsvr’ role.
+		$ mkdir /data/configdb
+
+9. Place the mongos.conf file in the /etc folder of the mongos server. 
+
+10. Place the configsvr.conf file in an appropriate folder e.g. /svr/mongodb  on each of the servers with the MongoDB cluster ‘configsvr’ role.
  
-10. Place the mongod.conf file in the /etc folder of each of the servers with the shard/database role (see configuration diagram above). 
+11. Place the mongod.conf file in the /etc folder of each of the servers with the shard/database role (see configuration diagram above). 
 
-11. Ensure that the permissions on the conf files are restricted but set to where they can be read by the account under which the MongoDB services run. 
+12. Ensure that the permissions on the conf files are restricted but set to where they can be read by the account under which the MongoDB services run. 
 
 ###II. DOWNLOAD AND CHUNK DATA-SET
 

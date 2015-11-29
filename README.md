@@ -20,6 +20,8 @@ VI.	Vizualize performance results<br>
 	
 		$ sudo apt-get update
 		$ sudo apt-get install -y mongodb-org
+	
+	or following these instructions.
 
 4. Start the MongoDB server by issuing the command below:
 

@@ -6,7 +6,7 @@ class DataChunker:
 
     def __init__(self, datafile, chunk_number, number_of_chunks):
         self.dat = datafile
-        self.chn = chunk_number + 1
+        self.chn = chunk_number
         self.nch = number_of_chunks
          
 
@@ -18,7 +18,7 @@ class DataChunker:
         #cursors for start and end on current chunk 
         start = self.getFileSize() * self.chn / self.nch
         end = self.getFileSize() * (self.chn + 1) / self.nch
-        fname = 'chunk'+str(self.chn)+'.txt'
+        fname = 'chunk'+str(self.chn + 1)+'.txt'
         wf = open(fname,'a')
  
         if start <= 0:
@@ -55,6 +55,6 @@ if __name__ == '__main__':
     number_of_chunks = 10
     chunk = {}
     for chunk_number in range(number_of_chunks):
-        print 'Processing chunk'+str(chunk_number)+'.txt... \n'
+        print 'Processing chunk'+str(chunk_number + 1) +'.txt... \n'
         chunk[chunk_number] = DataChunker(datafile, chunk_number, number_of_chunks)
         chunk[chunk_number].work()

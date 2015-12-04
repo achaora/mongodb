@@ -1,32 +1,37 @@
 import sys, getopt
+from subprocess import call
 from pymongo import MongoClient, ReadPreference
 
 class MongosConnection:
-    
+
     def __init__(self, setup):
-        self.stp = setup 
+        self.stp = setup
         self.connect = MongoClient()
-        
-    def mongosInstance(self):    
+
+    def mongosInstance(self):
         if self.stp == 'standalone':
-            #connection for standalone setup          
-            self.connect = MongoClient('localhost', 27017)
+
+            #uri for standalone mongos
+            uri = "mongodb://siteRootAdmin:zarura@achaora-005:27017"
+
+            #connection for standalone setup
+            self.connect = MongoClient(uri)
         elif self.stp == 'sharded':
             #uri for sharded mongos
-            uri = "achaora-mongo-001"
-            
+            uri = "mongodb://siteRootAdmin:zarura@achaora-001:27022"
+
             #connection for sharded mongos set-up
-            self.connect = MongoClient(uri, 27022)
-        
+            self.connect = MongoClient(uri)
+
         return self.connect
-    
+
 def importer(chunk):
-    if chunk == 'chunk0.txt':
-        ingest = 'mongoimport --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --headerline --file /data/rawdata/'+str(chunk)
+    if chunk == 'chunk1.txt':
+        ingest = 'mongoimport --host achaora-005 --port 27017 --username siteRootAdmin --password zarura --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --headerline --file ~/data/'+str(chunk)
     else:
-        ingest = 'mongoimport --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --file /data/rawdata/'+str(chunk)
+        ingest = 'mongoimport --host achaora-005 --port 27017 --username siteRootAdmin --password zarura --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --file ~/data/'+str(chunk)
     return ingest
-    
+
 def main(argv):
     setup = ''
     chunk = ''
@@ -50,11 +55,11 @@ def main(argv):
         elif opt in ("-s", "--setup"):
             setup = arg
         elif opt in ("-i", "--ifile"):
-            chunk = arg    
+            chunk = arg
     return setup, chunk
-   
+
 if __name__ == '__main__':
-    args = {} 
+    args = {}
     args = main(sys.argv[1:])
     setup = args[0]
     #print setup
@@ -63,4 +68,7 @@ if __name__ == '__main__':
     selected = MongosConnection(setup)
     instance = selected.mongosInstance()
     db = instance.medicareSuppliers
-    importer(chunk)
+    #supplier = db.supplier
+    print str(db)
+    call(importer(chunk))
+    print str(chunk)+" successfully imported"

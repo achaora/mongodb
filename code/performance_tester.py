@@ -137,10 +137,11 @@ if __name__ == '__main__':
     instance = selected.mongosInstance()
     db = instance.medicareSuppliers
     supplier = db.supplier
+    performance = db.performance_metric
     tstart = {}
     tend = {}
     tdifference = {}
-    timeTotal = tdifference
+    timeTotal = {}
     #print "Connected to shard: "+str(db.connection.is_mongos)
     print "Connected to shard: "+str(supplier)
     print "Primary db server connection: "+str(db)
@@ -149,18 +150,21 @@ if __name__ == '__main__':
         run = AggregateQuery().stateAvgs()
         print str(run)
         for test in range(3):
-            print 'Aggregate query on '+setup+': performance test...pass '+str(test + 1)+' of 3. \n'
+	    print '\nPerformance Test \t:Pass '+str(test + 1)+' of 3.'
+	    print 'Mongodb Environment\t:'+setup
+            print 'Query Type\t\t:Aggregate Query \nExecuting benchmark query...'
             tstart[test] = datetime.datetime.now()
-            print str(tstart[test])
             supplier.aggregate(run)
             tend[test] =  datetime.datetime.now()
-            print str(tend[test])
+            print 'Time Started\t\t:'+str(tstart[test])
+            print 'Time Ended\t\t:'+str(tend[test])
             tdifference[test] = tend[test] - tstart[test]
-            print str(tdifference[test])
-            print (list(supplier.aggregate(run)))
+            print 'Duration of Pass '+str([test + 1])+'\t:'+str(tdifference[test])
+            print 'Display Query Results:\n'
+	    print list((supplier.aggregate(run)))
             #print str(db.supplier.find_one())
-            print 'Pass '+str(test + 1)+' query execution time = '+str(tdifference[test])
-            timeTotal[test]+= tdifference[test]
+            #print 'Pass '+str(test + 1)+' query execution time = '+str(tdifference[test])
+            #timeTotal[test]+= tdifference[test]
     elif query == 'mapreduce':
         run = MapReduceQuery()
         print str(run)
@@ -169,23 +173,32 @@ if __name__ == '__main__':
         finalizeStep = run.finalizeFunction()
         outStep = run.outputCollection()
         for test in range(3):
-            #print 'Mapreduce query on '+setup+ ': performance test...pass '+str(test + 1)+' of 3. \n'
-            #print supplier.map_reduce(mapStep,reduceStep,outStep,finalize = finalizeStep)a
+            print '\nPerformance Test \t:Pass '+str(test + 1)+' of 3.'
+            print 'Mongodb Environment\t:'+setup
+            print 'Query Type\t\t:Mapreduce Query \nExecuting benchmark query...'
             tstart[test] = datetime.datetime.now()
-            print str(tstart[test])
             supplier.map_reduce(mapStep,reduceStep,outStep,finalize = finalizeStep)
             tend[test] =  datetime.datetime.now()
-            print str(tend[test])
+            print 'Time Started\t\t:'+str(tstart[test])
+            print 'Time Ended\t\t:'+str(tend[test])
             tdifference[test] = tend[test] - tstart[test]
-            print str(tdifference[test])
+            print 'Duration of Pass '+str([test + 1])+'\t:'+str(tdifference[test])
+            print 'Display Query Results:\n'
             result = supplier.map_reduce(mapStep,reduceStep,outStep,finalize = finalizeStep)
 
             for doc in result.find():
                 print doc
-
-            print 'Pass '+str(test + 1)+' query execution time = '+str(tdifference[test])
-            timeTotal[test]+= tdifference[test]
-
-    print 'The average execution time for this '+query+' query on the '+setup+' mnongodb server environment is '+str(timeTotal[test]/3)+' for the 3 iterations'
+    
+    timeTotal = tdifference[0] + tdifference[1] + tdifference[2]
+    durationAv = str(timeTotal/3)
+    print '\nThe average execution time for this '+query+' query on the '+setup+' mongodb server environment for the 3 iterations was:'+durationAv
+    recNo = supplier.count()
+    print 'The number of documents the query ran on was\t:'+str(recNo)
+    saveMetric = performance.insert_one({ 'environment': setup , 'query_type': query , 'avg_time': durationAv, 'no_of_docs': recNo }) 
+    resultsFile = open("metrics.csv", 'a')
+    newInput = setup+'-'+query+','+str(recNo)+','+durationAv+'\n'
+    #print newInput
+    resultsFile.write(newInput)
+    print "These metrics have been saved in the 'performance_metric' collection of the queried database\n" 
 
     #db.connection.close()

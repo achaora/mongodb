@@ -12,16 +12,20 @@ VI.	Vizualize performance results<br>
 
 ####Set Up 1: Mongo VM Connecting to Standalone Mongod VM
 
-1. Spin up an Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). Skip steps 2 and 3 below and [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) if unable to successfully install Cloudmesh on the Openstack VM.
- 
-2. Run script vm_standalone_builder.py to create a VM for housing the stand-alone MongoDB database
+Setting up Mongo (MongoDB Router) VM:
 
-3. Install the latest stable version of MongoDB on the VM created by issuing the commands:
+1. Spin up an Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). If unable to successfully install Cloudmesh on the Openstack VM, spin up a second Openstack VM for the Standalone Mongod and skip steps 1 and 2 in the section below (Setting up Mongod). Then [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) to install MongoDB on the Standalone Mongod VM.
+
+Setting up Standalone Mongod (MongoDB DB Server):
+
+1. Run script vm_standalone_builder.py to create a VM for housing the stand-alone MongoDB database
+
+2. Install the latest stable version of MongoDB on the VM created by issuing the commands:
 	
 		$ sudo apt-get update
 		$ sudo apt-get install -y mongodb-org
 
-4. Start the MongoDB server by issuing the command below:
+3. Start the MongoDB server by issuing the command below:
 
 		$ sudo service mongod start
 

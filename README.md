@@ -18,7 +18,7 @@ _Setting up Mongos (database router) VM:_
  
     If unable to successfully install Cloudmesh on the Openstack VM, spin up a second Openstack VM for the Standalone Mongod and skip     steps 1 and 2 in the sub-section below (Setting up Standalone Mongod VM). Then [follow these     instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) to install MongoDB on the Standalone Mongod VM.
 
-    *make sure to share ssh keys between the VMs (i.e. for each server in the set up, add the public keys of the other servers to the 'authorized_keys' file). To facilitate host discovery also consider adding each server and its IP(s) to the /etc/hosts file.
+    *make sure to share ssh keys between the VMs (i.e. for each server in the set up, add the public keys of the other servers to the 'authorized_keys' file). To facilitate host discovery also consider adding each server and its IP(s) to the /etc/hosts file of each VM.
 
 _Setting up Standalone Mongod (database) VM:_
 
@@ -45,7 +45,7 @@ _Setting up Mongos (database router) VM:_
 
     If unable to successfully install Cloudmesh on the Openstack VM, spin up 3 new Openstack VMs for the Sharded Cluster and skip     steps 1 and 2 in the sub-section below (Setting up Sharded Cluster). Then [follow these instructions to install MongoDB on each of the     3 Ubuntu VMs](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/).
     
-    *make sure to share ssh keys between the VMs (i.e. for each server in the set up, add the public keys of the other servers to the 'authorized_keys' file). To facilitate host discovery also consider adding each server and its IP(s) to the /etc/hosts file.
+    *make sure to share ssh keys between the VMs (i.e. for each server in the set up, add the public keys of the other servers to the 'authorized_keys' file). To facilitate host discovery also consider adding each server and its IP(s) to the /etc/hosts file of each VM.
 
 _Setting up Sharded (distributed database) Cluster:_
 

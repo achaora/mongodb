@@ -29,7 +29,9 @@ _Setting up Standalone Mongod (database) VM:_
 		$ sudo apt-get update
 		$ sudo apt-get install -y mongodb-org
 
-3. Start the MongoDB server by issuing the command below:
+3. Ensure that the permissions on folders /var/log/mongodb and /var/lib/mongodb are restricted but set to where they can be read by the account under which the MongoDB services will run - user 'ubuntu'. By default these will be set to  for user 'mongodb'.
+
+4. Start the MongoDB server by issuing the command below:
 
 		$ sudo service mongod start
 

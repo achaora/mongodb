@@ -12,7 +12,7 @@ VI.	Vizualize performance results<br>
 
 ####Set Up 1: Standalone VM
 
-1. Install Cloudmesh on VM using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html)
+1. Spin up Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). Skip 2 and 3 below and [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) if unable to install Cloudmesh.
  
 2. Run script vm_standalone_builder.py to create a VM for housing the stand-alone MongoDB database
 
@@ -20,8 +20,6 @@ VI.	Vizualize performance results<br>
 	
 		$ sudo apt-get update
 		$ sudo apt-get install -y mongodb-org
-	
-	or [following these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/).
 
 4. Start the MongoDB server by issuing the command below:
 

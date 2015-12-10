@@ -25,7 +25,7 @@ print cloudmesh.shell("default flavor --name=m1.small")
 print cloudmesh.shell("cluster create --count=3 --group=test --ln=ubuntu")
 You may also provide cloud name, flavor or image in the command if you don’t want to pre-set them. For example:
 
-print cloudmesh.shell(“cluster create –count=3 –group=test0 –ln=ubuntu –cloud=india –flavor=m1.small –
+print cloudmesh.shell(“cluster create –count=3 –group=test0 –ln=ubuntu –cloud=india –flavor=m1.medium –
 image=futuregrid/ubuntu-14.04”)
 
 #list machines in cluster

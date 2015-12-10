@@ -17,7 +17,7 @@ print cloudmesh.shell("label --prefix=test --id=1")
 
 #assign image and flavor of VMs
 print cloudmesh.shell("default image --name=futuregrid/ubuntu-14.04")
-print cloudmesh.shell("default flavor --name=m1.small")
+print cloudmesh.shell("default flavor --name=m1.medium")
 
 #assign login name for machines, cluster name and number of machines  and start cluster of 3 servers
 #*** - ADD input for login name

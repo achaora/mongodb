@@ -12,13 +12,13 @@ VI.	Vizualize performance results<br>
 
 ####Set Up 1: Mongos VM Connecting to Standalone Mongod VM
 
-_Setting up Mongos (DB Router) VM:_
+_Setting up Mongos (database router) VM:_
 
 1. Spin up an Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). The server running Cloudmesh will serve as a MongoDB router. 
  
 If unable to successfully install Cloudmesh on the Openstack VM, spin up a second Openstack VM for the Standalone Mongod and skip steps 1 and 2 in the sub-section below (Setting up Standalone Mongod VM). Then [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) to install MongoDB on the Standalone Mongod VM.
 
-_Setting up Standalone Mongod (Database) VM:_
+_Setting up Standalone Mongod (database) VM:_
 
 1. Run script vm_standalone_builder.py to create a VM for housing the stand-alone MongoDB database
 
@@ -37,13 +37,13 @@ _Setting up Standalone Mongod (Database) VM:_
 
 ####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster
 
-_Setting up Mongos (DB Router) VM:_
+_Setting up Mongos (database router) VM:_
 
 1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos. Alternatively, reuse the router server in 'Set Up 1' above.
 
 If unable to successfully install Cloudmesh on the Openstack VM, spin up 3 new Openstack VMs for the Sharded Cluster and skip steps 1 and 2 in the sub-section below (Setting up Sharded Cluster). Then [follow these instructions to install MongoDB on each of the 3 Ubuntu VMs](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/).
 
-_Setting up Sharded (Distributed Database) Cluster:_
+_Setting up Sharded (distributed database) Cluster:_
 
 1. From the mongos, run the script vm_cluster_builder.py to create a 3 node cluster for hosting the sharded MongoDB. 
 

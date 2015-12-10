@@ -33,7 +33,7 @@ _Setting up Standalone Mongod (Database) VM:_
 		$ mongo --host [name of the MongoDB server]
 
 
-####Set Up 2: Mongo VM Connecting to Sharded 3 VM Cluster
+####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster
 
 _Setting up Mongos (DB Router) VM:_
 

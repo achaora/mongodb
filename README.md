@@ -14,7 +14,7 @@ VI.	Vizualize performance results<br>
 
 _Setting up Mongos (DB Router) VM:_
 
-1. Spin up an Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). If unable to successfully install Cloudmesh on the Openstack VM, spin up a second Openstack VM for the Standalone Mongod and skip steps 1 and 2 in the sub-section below (Setting up Standalone Mongod VM). Then [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) to install MongoDB on the Standalone Mongod VM.
+1. Spin up an Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). The server running Cloudmesh will serve as a MongoDB router. If unable to successfully install Cloudmesh on the Openstack VM, spin up a second Openstack VM for the Standalone Mongod and skip steps 1 and 2 in the sub-section below (Setting up Standalone Mongod VM). Then [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) to install MongoDB on the Standalone Mongod VM.
 
 _Setting up Standalone Mongod (Database) VM:_
 
@@ -37,7 +37,7 @@ _Setting up Standalone Mongod (Database) VM:_
 
 _Setting up Mongos (DB Router) VM:_
 
-1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos (mongodb router). Alternatively, reuse the router server set-up in 1 above as the mongos server to the Sharded MongoDB cluster. If unable to successfully install Cloudmesh on the Openstack VM, spin up 3 new Openstack VMs for the Sharded Cluster and skip steps 1 and 2 in the sub-section below (Setting up Sharded Cluster). Then [follow these instructions to install MongoDB on each of the 3 Ubuntu VMs](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/).
+1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos (mongodb router). Alternatively, reuse the router server set-up in 'Set Up 1' above as the mongos server to the Sharded MongoDB cluster. If unable to successfully install Cloudmesh on the Openstack VM, spin up 3 new Openstack VMs for the Sharded Cluster and skip steps 1 and 2 in the sub-section below (Setting up Sharded Cluster). Then [follow these instructions to install MongoDB on each of the 3 Ubuntu VMs](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/).
 
 _Setting up Sharded (Distributed Database) Cluster:_
 

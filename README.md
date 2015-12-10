@@ -12,7 +12,7 @@ VI.	Vizualize performance results<br>
 
 ####Set Up 1: Standalone VM
 
-1. Spin up Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). Skip 2 and 3 below and [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) if unable to successfully install Cloudmesh on the Openstack VM.
+1. Spin up Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). Skip steps 2 and 3 below and [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) if unable to successfully install Cloudmesh on the Openstack VM.
  
 2. Run script vm_standalone_builder.py to create a VM for housing the stand-alone MongoDB database
 
@@ -31,7 +31,7 @@ VI.	Vizualize performance results<br>
 
 ####Set Up 2: 3 VM Cluster
 
-1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos (router) server. Alternatively, reuse the router server set-up in 1 above as the mongos server to the distributed MongoDB cluster. Skip 2 and 3 below and [follow these instructions to install MongoDB on Ubuntu](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) if unable to successfully install Cloudmesh on the Openstack VM.
+1. Install Cloudmesh on VM using the instructions found here:  [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html) . The server running Cloudmesh will serve as the mongos (router) server. Alternatively, reuse the router server set-up in 1 above as the mongos server to the distributed MongoDB cluster. Skip steps 2 and 3 below and [follow these instructions to install MongoDB on Ubuntu](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) if unable to successfully install Cloudmesh on the Openstack VM.
 
 2. From the mongos, run the script vm_cluster_builder.py to create a 3 node cluster for hosting the sharded MongoDB. 
 

@@ -12,7 +12,7 @@ VI.	Vizualize performance results<br>
 
 ####Set Up 1: Mongos VM Connecting to Standalone Mongod VM
 
-Setting up Mongos (MongoDB Router) VM:
+_Setting up Mongos (MongoDB Router) VM:_
 
 1. Spin up an Openstack VM and install Cloudmesh using the instructions found here: [Quickstart for an Openstack VM](http://cloudmesh.github.io/introduction_to_cloud_computing/cloudmesh/setup/setup_openstack.html). If unable to successfully install Cloudmesh on the Openstack VM, spin up a second Openstack VM for the Standalone Mongod and skip steps 1 and 2 in the sub-section below (Setting up Mongod). Then [follow these instructions](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/) to install MongoDB on the Standalone Mongod VM.
 

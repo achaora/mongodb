@@ -15,7 +15,7 @@ class MongosConnection:
     def mongosInstance(self):
         if self.stp == 'standalone':
             #mongoDB URI for standalone mongod
-            uri = "mongodb://siteRootAdmin:zarura@achaora-005:27017"
+            uri = "mongodb://siteRootAdmin:zarura@achaora-006:27017"
             #connection for standalone setup
             self.connect = MongoClient(uri)
         elif self.stp == 'sharded':
@@ -45,7 +45,6 @@ class AggregateQuery:
             }
            ]
         return self.query
-
 
 class MapReduceQuery:
 
@@ -150,8 +149,8 @@ if __name__ == '__main__':
         run = AggregateQuery().stateAvgs()
         print str(run)
         for test in range(3):
-	    print '\nPerformance Test \t:Pass '+str(test + 1)+' of 3.'
-	    print 'Mongodb Environment\t:'+setup
+            print '\nPerformance Test \t:Pass '+str(test + 1)+' of 3.'
+            print 'Mongodb Environment\t:'+setup
             print 'Query Type\t\t:Aggregate Query \nExecuting benchmark query...'
             tstart[test] = datetime.datetime.now()
             supplier.aggregate(run)
@@ -160,12 +159,10 @@ if __name__ == '__main__':
             print 'Time Ended\t\t:'+str(tend[test])
             tdifference[test] = tend[test] - tstart[test]
             print 'Duration of Pass '+str([test + 1])+'\t:'+str(tdifference[test])
-            print 'Display Query Results:\n'
-	    print list((supplier.aggregate(run)))
-            #print str(db.supplier.find_one())
-            #print 'Pass '+str(test + 1)+' query execution time = '+str(tdifference[test])
-            #timeTotal[test]+= tdifference[test]
-    elif query == 'mapreduce':
+            #print 'Display Query Results:\n'
+            #print list((supplier.aggregate(run)))
+            
+  elif query == 'mapreduce':
         run = MapReduceQuery()
         print str(run)
         mapStep = run.mapFunction()
@@ -183,22 +180,21 @@ if __name__ == '__main__':
             print 'Time Ended\t\t:'+str(tend[test])
             tdifference[test] = tend[test] - tstart[test]
             print 'Duration of Pass '+str([test + 1])+'\t:'+str(tdifference[test])
-            print 'Display Query Results:\n'
-            result = supplier.map_reduce(mapStep,reduceStep,outStep,finalize = finalizeStep)
+            #print 'Display Query Results:\n'
+            #result = supplier.map_reduce(mapStep,reduceStep,outStep,finalize = finalizeStep)
 
-            for doc in result.find():
-                print doc
-    
+            #for doc in result.find():
+            #    print doc
+
     timeTotal = tdifference[0] + tdifference[1] + tdifference[2]
     durationAv = str(timeTotal/3)
     print '\nThe average execution time for this '+query+' query on the '+setup+' mongodb server environment for the 3 iterations was:'+durationAv
     recNo = supplier.count()
     print 'The number of documents the query ran on was\t:'+str(recNo)
-    saveMetric = performance.insert_one({ 'environment': setup , 'query_type': query , 'avg_time': durationAv, 'no_of_docs': recNo }) 
+    saveMetric = performance.insert_one({ 'environment': setup , 'query_type': query , 'avg_time': durationAv, 'no_of_docs': recNo })
     resultsFile = open("metrics.csv", 'a')
     newInput = setup+'-'+query+','+str(recNo)+','+durationAv+'\n'
     #print newInput
     resultsFile.write(newInput)
-    print "These metrics have been saved in the 'performance_metric' collection of the queried database\n" 
+    print "These metrics have been saved in the 'performance_metric' collection of the queried database\n"
 
-    #db.connection.close()

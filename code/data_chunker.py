@@ -1,4 +1,4 @@
-#Takes in a data file and breaks it down into chunks for 
+#Takes in a data file and breaks it down into chunks for
 #performance anaylsis based on data-set size
 import sys, getopt
 
@@ -8,29 +8,29 @@ class DataChunker:
         self.dat = datafile
         self.chn = chunk_number
         self.nch = number_of_chunks
-         
 
-    def getFileSize(self): #get size of file 
+
+    def getFileSize(self): #get size of file
         self.dat.seek(0,2)
         return self.dat.tell()
-    
-    def work(self):    
-        #cursors for start and end on current chunk 
+
+    def work(self):
+        #cursors for start and end on current chunk
         start = self.getFileSize() * self.chn / self.nch
         end = self.getFileSize() * (self.chn + 1) / self.nch
         fname = 'chunk'+str(self.chn + 1)+'.txt'
         wf = open(fname,'a')
- 
+
         if start <= 0:
             self.dat.seek(0,0)
         else:
             self.dat.seek(start,0)
-                   
+
         #iterate to end of chunk reading file content and writing to chunk file
         while self.dat.tell() < end:
             content = self.dat.readline()
             wf.write(content)
-         
+
         return
             
 def main(argv):
@@ -47,7 +47,7 @@ def main(argv):
       elif opt in ("-i", "--ifile"):
          inputfile = arg
    return inputfile
-   
+
 if __name__ == '__main__':
     main(sys.argv[1:])
     inputfile = main(sys.argv[1:])

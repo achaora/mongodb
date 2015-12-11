@@ -34,14 +34,17 @@ _Setting up Standalone Mongod (database) VM:_
 4. Start the MongoDB server by issuing the command below:
 
 		$ mongod --config /etc/mongod.conf
+	
+5. From the shell of the Standalone Mongod VM connect to the standalone database and create the appropriate user accounts by issuing the command:
 
-5. Create the appropriate database user accounts by running the commands in the provided set up file 'database_accounts.txt'  
+		$ mongo
+   and running the commands in the provided set up file 'database_accounts.txt'  
 
 6. Test connection to Standalone Mongod from MongoDB router VM by running the command below and verifying if connection is established:
 
-		$mongo --host _$USER-00X_ --port 27017
+		$mongo --host $USER-00X --port 27017
 		
-		(where _$USER-00X_ is the name of the Standalone Mongod VM) 
+		(where $USER-00X is the name of the Standalone Mongod VM) 
 
 ####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster
 

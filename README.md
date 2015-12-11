@@ -37,9 +37,11 @@ _Setting up Standalone Mongod (database) VM:_
 
 5. Create the appropriate database user accounts by running the commands in the provided set up file 'database_accounts.txt'  
 
-6. Test connection to Standalone Mongod from MongoDB router VM by running the command below and verifying if connectionis established:
+6. Test connection to Standalone Mongod from MongoDB router VM by running the command below and verifying if connection is established:
 
-	|	$mongo 
+		$mongo --host $USER-00X --port 27017
+		
+		(where $USER-00X is the name of the Standalone Mongod VM) 
 
 ####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster
 

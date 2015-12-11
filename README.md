@@ -105,16 +105,29 @@ _Setting up Sharded (distributed database) Cluster:_
 14. Authenticate to the user with the database 'root' role from the mongo shell of each of the 'shardsvr' VMs to add shards to each of them:
 
 		>db.auth("siteRootAdmin","zarura")
-		*** a successful authentication will display >1 888
+		*** a successful authentication will display >1 ***
 		>sh.addShard( "$USER-00X:272018" )
+		
+		(where $USER-00X is the name of the VM)
 
-15. Run the mongos server service 
+15. Run the mongos server service on the router VM:
 
+		$mongos --configdb $USER-00X1:27019,$USER-00X2:27019,$USER-00X3:27019 --config /svr/mongodb/mongos.conf
+		
+		(where $USER-00X1 - 3 are the names of the 'configsvr' cluster VMs)
+
+16. Test connection to Sharded Cluster from MongoDB router VM by running the command below and verifying if connection is established:
+
+		$mongo --host $USER-00X --port 27022
+		
+		(where $USER-00X is the name of the MongoDB router VM)
 
 
 ###II. DOWNLOAD AND CHUNK DATA-SET
 
-1. Download the tab delimited ['Medicare Provider Data - Physicians and Other Suppliers'](http://www.cms.gov/apps/ama/license-2011.asp?file=http://download.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Downloads/Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip) dataset archive file from Data.gov. 
+1. Download the tab delimited ['Medicare Provider Data - Physicians and Other Suppliers'](http://www.cms.gov/apps/ama/license-2011.asp?file=http://download.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Downloads/Medicare-Physician-and-Other-Supplier-PUF-CY2012.zip) dataset archive file from Data.gov.
+
+(N.B. The data set used in this evaluation appears to no longer be available through the link on Data.gov. For access to an archived copy on IU Box, please contact the author. Instructors of B590 would have received an invitation to the Box folder with the data)  
 
 2. Extract the dataset file from the archive and move it into the cloned ./data folder
 
@@ -127,9 +140,13 @@ _Setting up Sharded (distributed database) Cluster:_
 
 ###III. IMPORT DATA CHUNK INTO DATABASES
 
-1. Run script [data_importer.py](./code/data_importer.py) to import first chunks on data into standalone and sharded cluster environments 
+1. Find and remove comment line from the top of data chunk1.txt that reads '0000000001      CPT copyright 2011 American Medical Association.  All Rights Reserved'.  
+
+2. Run script [data_importer.py](./code/data_importer.py) to import first chunks on data into standalone and sharded cluster environments (update the file to reflect the correct server information for your connections):
 
 ###IV. EXECUTE PERFORMANCE SCRIPTS
+
+1. Run script [performance_tester.py](./code/performance_tester.py) to 
 
 
 ###V. REPEAT III AND IV

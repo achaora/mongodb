@@ -35,6 +35,11 @@ _Setting up Standalone Mongod (database) VM:_
 
 		$ mongod --config /etc/mongod.conf
 
+5. Create the appropriate database user accounts by running the commands in the provided set up file 'database_accounts.txt'  
+
+6. Test connection to Standalone Mongod from MongoDB router VM by running the command below and verifying if connectionis established:
+
+	|	$mongo 
 
 ####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster
 
@@ -67,7 +72,7 @@ _Setting up Sharded (distributed database) Cluster:_
 
 5. Copy the file keyfile, mongodb-keyfile, to all servers in the set-up, including the mongos server. Create and place the keyfile in an obscure directory/path with permissions set to where it is readable by the MongoDB owner.
 
-6. Update the provided sample yaml files mongos.conf, configsvr.conf and shardsvr.conf files with the correct path to the mongodb-keyfile on each server (find lines with place-holding text for the keyfile path).
+6. Update the provided sample yaml files 'mongos.conf', 'configsvr.conf' and 'shardsvr.conf' files with the correct path to the mongodb-keyfile on each server (find lines with place-holding text for the keyfile path).
 
 7. Create data directories on each of the three cluster servers and ensure that the account running MongoDB has read and write access to them.
 

@@ -77,15 +77,15 @@ _Setting up Sharded (distributed database) Cluster:_
 
 5. Copy the file keyfile, mongodb-keyfile, to all servers in the set-up, including the mongos server. Create and place the keyfile in an obscure directory/path with permissions set to where it is readable by the MongoDB owner.
 
-6. Update the provided sample yaml files 'mongos.conf', 'configsvr.conf' and 'shardsvr.conf' files with the correct path to the mongodb-keyfile on each server (find lines with place-holding text for the keyfile path).
+6. Update the provided sample yaml files [mongos.conf](./config/mongos.conf), [configsvr.conf](./config/configsvr.conf) and [shardsvr.conf](./config/shardsvr) files with the correct path to the mongodb-keyfile on each server (find lines with place-holding text for the keyfile path).
 
 7. Create data directories on each of the three cluster servers and ensure that the account running MongoDB has read and write access to them.
 
 		$ mkdir /data/configdb
 
-8. Place the mongos.conf file in the /etc folder of the mongos server. 
+8. Place the [mongos.conf](./config/mongos.conf) file in the /etc folder of the mongos server. 
 
-9. Place the configsvr.conf and shardsvr.conf files in an appropriate folder e.g. /svr/mongodb  on each of the 3 servers. Under this configuration, each of the servers in the 3 VM cluster will run the ‘configsvr’ and 'shardsvr' roles. Note from the sample yaml files that these roles have to run on different ports, and the data for the two services have be located at different paths in order to run on the same VM. 
+9. Place the [configsvr.conf](./config/configsvr.conf) and [shardsvr.conf](./config/shardsvr.conf) files in an appropriate folder e.g. /svr/mongodb  on each of the 3 servers. Under this configuration, each of the servers in the 3 VM cluster will run the ‘configsvr’ and 'shardsvr' roles. Note from the sample yaml files that these roles have to run on different ports, and the data for the two services have be located at different paths in order to run on the same VM. 
  
 10. Place the shardsvr.conf file in the /svr/mongodb folder of each of the servers with the shard/database role (see configuration diagram above). 
 

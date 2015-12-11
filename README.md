@@ -38,7 +38,7 @@ _Setting up Standalone Mongod (database) VM:_
 5. From the shell of the Standalone Mongod VM connect to the standalone database and create the appropriate user accounts by issuing the command:
 
 		$ mongo
-   and running the commands in the provided set up file 'database_accounts.txt'  
+   and running the commands in the provided set up file [database_accounts.txt](./setup/database_accounts.txt)  
 
 6. Test connection to Standalone Mongod from MongoDB router VM by running the command below and verifying if connection is established:
 

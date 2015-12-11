@@ -33,10 +33,7 @@ _Setting up Standalone Mongod (database) VM:_
 
 4. Start the MongoDB server by issuing the command below:
 
-		$ sudo service mongod start
-
-5. Start the mongos server by issuing the command:
-		$ mongo --host [name of the MongoDB server]
+		$ mongod --config /etc/mongod.conf
 
 
 ####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster

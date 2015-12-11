@@ -87,9 +87,30 @@ _Setting up Sharded (distributed database) Cluster:_
 
 9. Place the [configsvr.conf](./config/configsvr.conf) and [shardsvr.conf](./config/shardsvr.conf) files in an appropriate folder e.g. /svr/mongodb  on each of the 3 servers. Under this configuration, each of the servers in the 3 VM cluster will run the ‘configsvr’ and 'shardsvr' roles. Note from the sample yaml files that these roles have to run on different ports, and the data for the two services have be located at different paths in order to run on the same VM. 
  
-10. Place the shardsvr.conf file in the /svr/mongodb folder of each of the servers with the shard/database role (see configuration diagram above). 
+10. Place the shardsvr.conf file in the /svr/mongodb folder of each of the servers with the shard/database role. Ensure that the permissions on each of the conf files are restricted but set to where they can be read by the account (user 'ubuntu')  under which the MongoDB services run. By default these will be set for use by user 'mongodb.
 
-12. Ensure that the permissions on the conf files are restricted but set to where they can be read by the account under which the MongoDB services run. 
+11. Start the 'shardsvr' server services on each of the 3 VMs:
+
+		$ mongod --config /svr/mongodb/shardsvr.conf --shardsvr
+
+12. Start the 'configsvr' server services on the 3 VMs:
+ 
+		 mongod --config /svr/mongodb/configsvr.conf --configsvr 
+
+13. From the shell of each of the VMs running the 'shardsvr' service connect to the local MongoDB and create the appropriate user accounts by issuing the command:
+
+		$ mongo
+   and running the commands in the provided set up file [database_accounts.txt](./setup/database_accounts.txt)
+
+14. Authenticate to the user with the database 'root' role from the mongo shell of each of the 'shardsvr' VMs to add shards to each of them:
+
+		>db.auth("siteRootAdmin","zarura")
+		*** a successful authentication will display >1 888
+		>sh.addShard( "$USER-00X:272018" )
+
+15. Run the mongos server service 
+
+
 
 ###II. DOWNLOAD AND CHUNK DATA-SET
 

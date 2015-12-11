@@ -1,5 +1,5 @@
 import sys, getopt
-from subprocess import call
+import shlex, subprocess
 from pymongo import MongoClient, ReadPreference
 
 class MongosConnection:
@@ -11,8 +11,8 @@ class MongosConnection:
     def mongosInstance(self):
         if self.stp == 'standalone':
 
-            #uri for standalone mongos
-            uri = "mongodb://siteRootAdmin:zarura@achaora-005:27017"
+            #uri for standalone mongod
+            uri = "mongodb://siteRootAdmin:zarura@achaora-006:27017"
 
             #connection for standalone setup
             self.connect = MongoClient(uri)
@@ -25,12 +25,45 @@ class MongosConnection:
 
         return self.connect
 
-def importer(chunk):
-    if chunk == 'chunk1.txt':
-        ingest = 'mongoimport --host achaora-005 --port 27017 --username siteRootAdmin --password zarura --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --headerline --file ~/data/'+str(chunk)
-    else:
-        ingest = 'mongoimport --host achaora-005 --port 27017 --username siteRootAdmin --password zarura --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --file ~/data/'+str(chunk)
+
+class ServerShell:
+
+     def __init__(self, setup):
+         self.stp = setup
+
+     def serverInstance(self):
+         if self.stp == 'standalone':
+            #connection for standalone mongo
+            host = 'achaora-006'
+            port = '27017'
+            username = 'siteRootAdmin'
+            password = 'zarura'
+
+         elif self.stp == 'sharded':
+            #connection for sharded mongo
+            host = 'achaora-001'
+            port = '27022'
+            username = 'siteRootAdmin'
+            password = 'zarura'
+
+         return host, port, username, password
+
+def importer(chunk, setup, host, port, username, password):
+    if setup == 'standalone':
+        if chunk == 'chunk1.txt':
+            ingest = 'mongoimport --host '+host+' --port '+port+' --username '+username+' --password '+password+' --authenticationDatabase admin --db medicareSuppliers --collection supplier --
+ignoreBlanks --type tsv --headerline --file '+str(chunk)
+        else:
+            ingest = 'mongoimport --host '+host+' --port '+port+' --username '+username+' --password '+password+' --authenticationDatabase admin --db medicareSuppliers --collection supplier --
+ignoreBlanks --type tsv --headerline --file '+str(chunk)
+    elif setup == 'sharded':
+        if chunk == 'chunk1.txt':
+            ingest = 'mongoimport --host '+host+' --port '+port+' --username '+username+' --password '+password+' --authenticationDatabase admin --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --headerline --file '+str(chunk)
+        else:
+            ingest = 'mongoimport --host '+host+' --port '+port+' --username '+username+' --password '+password+' --authenticationDatabase admin --db medicareSuppliers --collection supplier --ignoreBlanks --type tsv --headerline --file '+str(chunk)
+
     return ingest
+
 
 def main(argv):
     setup = ''
@@ -64,11 +97,18 @@ if __name__ == '__main__':
     setup = args[0]
     #print setup
     chunk = args[1]
-    #print chunk
-    selected = MongosConnection(setup)
-    instance = selected.mongosInstance()
-    db = instance.medicareSuppliers
-    #supplier = db.supplier
-    print str(db)
-    call(importer(chunk))
-    print str(chunk)+" successfully imported"
+    parameters = {}
+    connection = MongosConnection(setup)
+    selected = ServerShell(setup)
+    connected = connection.mongosInstance()
+    instance = selected.serverInstance()
+    parameters = instance
+    print parameters[0]
+    db = connected.medicareSuppliers
+    supplier = db.supplier
+    #print str(db)
+    cmdMongoImport = importer(chunk,setup,parameters[0],parameters[1],parameters[2],parameters[3])
+    subpMongoImport = shlex.split(cmdMongoImport)
+    print 'Data importing from'+str(chunk)+' ...\n'
+    subprocess.Popen(subpMongoImport)
+

@@ -44,7 +44,7 @@ _Setting up Standalone Mongod (database) VM:_
 
 		$mongo --host $USER-00X --port 27017
 		
-		(where $USER-00X is the name of the Standalone Mongod VM) 
+			(where $USER-00X is the name of the Standalone Mongod VM) 
 
 ####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster
 
@@ -105,10 +105,12 @@ _Setting up Sharded (distributed database) Cluster:_
 14. Authenticate to the user with the database 'root' role from the mongo shell of each of the 'shardsvr' VMs to add shards to each of them:
 
 		>db.auth("siteRootAdmin","zarura")
-		*** a successful authentication will display >1 ***
+		
+			*** a successful authentication will display >1 ***
+		
 		>sh.addShard( "$USER-00X:272018" )
 		
-		(where $USER-00X is the name of the VM)
+			(where $USER-00X is the name of the VM)
 
 15. Run the mongos server service on the router VM:
 
@@ -120,7 +122,7 @@ _Setting up Sharded (distributed database) Cluster:_
 
 		$mongo --host $USER-00X --port 27022
 		
-		(where $USER-00X is the name of the MongoDB router VM)
+			(where $USER-00X is the name of the MongoDB router VM)
 
 
 ###II. DOWNLOAD AND CHUNK DATA-SET
@@ -142,7 +144,11 @@ _Setting up Sharded (distributed database) Cluster:_
 
 1. Find and remove comment line from the top of data chunk1.txt that reads '0000000001      CPT copyright 2011 American Medical Association.  All Rights Reserved'.  
 
-2. Run script [data_importer.py](./code/data_importer.py) to import first chunks on data into standalone and sharded cluster environments (update the file to reflect the correct server information for your connections):
+2. Run script [data_importer.py](./code/data_importer.py) to import first chunk of data into standalone and sharded cluster environments (update the file to reflect the credentials for your server connection):
+
+		$python  data_importer.py -i chunk1.txt -s _setup_
+		
+			(where _setup_ is 'standalone' or 'sharded')
 
 ###IV. EXECUTE PERFORMANCE SCRIPTS
 

@@ -146,16 +146,26 @@ _Setting up Sharded (distributed database) Cluster:_
 
 2. Run script [data_importer.py](./code/data_importer.py) to import first chunk of data into standalone and sharded cluster environments (update the file to reflect the credentials for your server connection):
 
-		$python  data_importer.py -i chunk1.txt -s _setup_
+		$python  data_importer.py -i chunk1.txt -s [setup]
 		
-			(where _setup_ is 'standalone' or 'sharded')
+			(where [setup] is 'standalone' or 'sharded')
 
 ###IV. EXECUTE PERFORMANCE SCRIPTS
 
-1. Run script [performance_tester.py](./code/performance_tester.py) to 
+1. Run script [performance_tester.py](./code/performance_tester.py) to record performance of the aggregate query on Standalone VM, and aggregate and mapreduce queries in the Sharded Cluster environment.  
 
-
+		$python  performance_tester.py -s [setup] -q [query]
+		
+			(where [setup] is 'standalone' or 'sharded'; [query] is 'aggregate' or 'mapreduce')
+			
+    N.B. The mapreduce query, by virtue of its architecture, only runs in the sharded (distributed database) environment.
+    
 ###V. REPEAT III AND IV
 
+1. Copy 'headerline' from chunk1.txt and past in each subsequent chunk for importation. If first data line in chunk is incomplete due to chunking trancation, remove the line from the file.
+
+2. Repeat III and IV above to increment size of data set and establish perfomrmance metrics at each stage  
 
 ###VI. VISUALIZE PERFORMANCE RESULTS
+
+    Performance results are written to the 'performance_metrics' mongodb collection of the queried database and to the 'metrics.csv' file. Extract and plot results on graph 

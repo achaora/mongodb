@@ -44,7 +44,7 @@ _Setting up Standalone Mongod (database) VM:_
 
 		$mongo --host $USER-00X --port 27017
 		
-			(where $USER-00X is the name of the Standalone Mongod VM) 
+		(where $USER-00X is the name of the Standalone Mongod VM) 
 
 ####Set Up 2: Mongos VM Connecting to Sharded 3 VM Cluster
 
@@ -106,11 +106,11 @@ _Setting up Sharded (distributed database) Cluster:_
 
 		>db.auth("siteRootAdmin","zarura")
 		
-			*** a successful authentication will display >1 ***
+		*** a successful authentication will display >1 ***
 		
 		>sh.addShard( "$USER-00X:272018" )
 		
-			(where $USER-00X is the name of the VM)
+		(where $USER-00X is the name of the VM)
 
 15. Run the mongos server service on the router VM:
 
@@ -122,7 +122,7 @@ _Setting up Sharded (distributed database) Cluster:_
 
 		$mongo --host $USER-00X --port 27022
 		
-			(where $USER-00X is the name of the MongoDB router VM)
+		(where $USER-00X is the name of the MongoDB router VM)
 
 
 ###II. DOWNLOAD AND CHUNK DATA-SET
@@ -148,7 +148,7 @@ _Setting up Sharded (distributed database) Cluster:_
 
 		$python  data_importer.py -i chunk1.txt -s [setup]
 		
-			(where [setup] is 'standalone' or 'sharded')
+		(where [setup] is 'standalone' or 'sharded')
 
 ###IV. EXECUTE PERFORMANCE SCRIPTS
 
@@ -156,7 +156,7 @@ _Setting up Sharded (distributed database) Cluster:_
 
 		$python  performance_tester.py -s [setup] -q [query]
 		
-			(where [setup] is 'standalone' or 'sharded'; [query] is 'aggregate' or 'mapreduce')
+		(where [setup] is 'standalone' or 'sharded'; [query] is 'aggregate' or 'mapreduce')
 			
     N.B. The mapreduce query, by virtue of its architecture, only runs in the sharded (distributed database) environment.
     
@@ -168,4 +168,4 @@ _Setting up Sharded (distributed database) Cluster:_
 
 ###VI. VISUALIZE PERFORMANCE RESULTS
 
-    Performance results are written to the 'performance_metrics' mongodb collection of the queried database and to the 'metrics.csv' file. Extract and plot results on graph 
+   Performance results are written to the 'performance_metrics' mongodb collection of the queried database and to the 'metrics.csv' file. Extract and plot results on graph 

@@ -1,9 +1,10 @@
+#Takes data chunk and imports it into selected database environment
 import sys, getopt
 import shlex, subprocess
 from pymongo import MongoClient, ReadPreference
 
 class MongosConnection:
-
+#class for db connection
     def __init__(self, setup):
         self.stp = setup
         self.connect = MongoClient()
@@ -27,7 +28,7 @@ class MongosConnection:
 
 
 class ServerShell:
-
+#class for shell subprocess execution of bulk data import commands
      def __init__(self, setup):
          self.stp = setup
 
@@ -95,7 +96,6 @@ if __name__ == '__main__':
     args = {}
     args = main(sys.argv[1:])
     setup = args[0]
-    #print setup
     chunk = args[1]
     parameters = {}
     connection = MongosConnection(setup)
@@ -106,7 +106,6 @@ if __name__ == '__main__':
     print parameters[0]
     db = connected.medicareSuppliers
     supplier = db.supplier
-    #print str(db)
     cmdMongoImport = importer(chunk,setup,parameters[0],parameters[1],parameters[2],parameters[3])
     subpMongoImport = shlex.split(cmdMongoImport)
     print 'Data importing from'+str(chunk)+' ...\n'

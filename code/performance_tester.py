@@ -1,3 +1,4 @@
+#Runs timed queries for database environment performance tests 
 import sys, getopt
 import array
 import datetime
@@ -7,7 +8,7 @@ from bson.code import Code
 from datetime import timedelta
 
 class MongosConnection:
-
+#class for connecting to databases
     def __init__(self, setup):
         self.stp = setup
         self.connect = MongoClient()
@@ -29,7 +30,7 @@ class MongosConnection:
 
 
 class AggregateQuery:
-
+#aggregate query class
     def __init__(self):
         self.query = ''
 
@@ -47,7 +48,7 @@ class AggregateQuery:
         return self.query
 
 class MapReduceQuery:
-
+#mapreduce query class
     def __init__(self):
         self.mapcode = ''
         self.reducecode = ''
@@ -129,9 +130,7 @@ if __name__ == '__main__':
     args = {}
     args = main(sys.argv[1:])
     setup = args[0]
-    #print setup
     query = args[1]
-    #print query
     selected = MongosConnection(setup)
     instance = selected.mongosInstance()
     db = instance.medicareSuppliers
@@ -141,7 +140,6 @@ if __name__ == '__main__':
     tend = {}
     tdifference = {}
     timeTotal = {}
-    #print "Connected to shard: "+str(db.connection.is_mongos)
     print "Connected to shard: "+str(supplier)
     print "Primary db server connection: "+str(db)
 
@@ -180,11 +178,7 @@ if __name__ == '__main__':
             print 'Time Ended\t\t:'+str(tend[test])
             tdifference[test] = tend[test] - tstart[test]
             print 'Duration of Pass '+str([test + 1])+'\t:'+str(tdifference[test])
-            #print 'Display Query Results:\n'
-            #result = supplier.map_reduce(mapStep,reduceStep,outStep,finalize = finalizeStep)
-
-            #for doc in result.find():
-            #    print doc
+           
 
     timeTotal = tdifference[0] + tdifference[1] + tdifference[2]
     durationAv = str(timeTotal/3)
@@ -194,7 +188,6 @@ if __name__ == '__main__':
     saveMetric = performance.insert_one({ 'environment': setup , 'query_type': query , 'avg_time': durationAv, 'no_of_docs': recNo })
     resultsFile = open("metrics.csv", 'a')
     newInput = setup+'-'+query+','+str(recNo)+','+durationAv+'\n'
-    #print newInput
     resultsFile.write(newInput)
     print "These metrics have been saved in the 'performance_metric' collection of the queried database\n"
 
